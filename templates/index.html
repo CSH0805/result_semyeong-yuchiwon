@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도로 이상 감지 시스템</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <img class="logo" src="/static/logo.png" alt="도로 감지 시스템">
+
+        <h2>도로 감지 시스템</h2>
+    </header>
+    <div class="container">
+        <h2>카메라 제어</h2>
+        <button id="start-btn">카메라 시작</button>
+        <button id="stop-btn">카메라 중지</button>
+        <div class="video-container">
+            <img id="video-feed" src="/video_feed" alt="Video Feed">
+        </div>        
+        <div id="status" style="margin-top: 20px;"></div>
+    </div>
+    <footer>
+        <p>&copy; 2025 도로 이상 감지 시스템</p>
+    </footer>
+    <script>
+        document.getElementById('start-btn').addEventListener('click', () => {
+            fetch('/start', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('status').innerText = data.status;
+                })
+                .catch(error => {
+                    document.getElementById('status').innerText = '카메라 시작 중 오류 발생';
+                });
+        });
+
+        document.getElementById('stop-btn').addEventListener('click', () => {
+            fetch('/stop', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('status').innerText = data.status;
+                })
+                .catch(error => {
+                    document.getElementById('status').innerText = '카메라 중지 중 오류 발생';
+                });
+        });
+    </script>
+</body>
+</html>
